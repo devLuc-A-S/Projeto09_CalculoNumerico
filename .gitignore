@@ -1,0 +1,30 @@
+﻿# Ambientes virtuais e caches Python
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Saídas temporárias de experimentos (mantém apenas a pasta no Git)
+saidas/*
+!saidas/.gitkeep
+
+# Arquivos auxiliares de compilação LaTeX
+*.aux
+*.log
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.bbl
+*.blg
+
+# Sistema operacional e editores
+Thumbs.db
+Desktop.ini
+.vscode/
+.idea/
