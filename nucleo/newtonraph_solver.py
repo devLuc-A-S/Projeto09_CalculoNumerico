@@ -1,0 +1,40 @@
+import numpy as np
+
+A=0.17
+B=0.45
+C=0.45
+D=0.55 # em metros [m]
+theta_a = (np.pi)/2
+
+def f(x):
+    theta_b = x[0][0] # x_ij
+    theta_d = x[1][0]
+    return np.array([[A*np.cos(theta_a)+B*np.cos(theta_b)-C*np.cos(theta_d)-D],
+                    [A*np.sin(theta_a)+B*np.sin(theta_b)-C*np.sin(theta_d)]]) # x = [theta_b, theta_d]^T
+def jacobian(x):
+    theta_b = x[0][0]
+    theta_d = x[1][0]
+    return np.array([
+                     [(-B)*np.sin(theta_b), C*np.sin(theta_d)],
+                     [B*np.cos(theta_b), -C*np.cos(theta_d)]
+                     ])
+def MNR(f, j, x_ini, tol=1e-8, kmax=50):
+    x_aprox = x_ini.copy()
+    k_ini = 0
+    convergiu = False
+    for k in range(kmax):
+        j_aprox = j(x_aprox)
+        f_aprox = -f(x_aprox)
+        Dx = np.linalg.solve(j_aprox, f_aprox)
+        x_aprox=x_aprox+Dx
+        k_ini = k+1
+        if np.max(np.abs(Dx)) < tol:
+            convergiu = True
+            break
+    return x_aprox, k_ini, convergiu, np.linalg.norm(f(x_aprox), np.inf)
+
+if __name__ == "__main__":
+    x_teste = np.array([[1.0], [2.0]])
+    for kmax in (2, 50):
+        x_sol, ite, conv, res = MNR(f, jacobian, x_teste, kmax=kmax)
+        print(f"kmax={kmax}: x={x_sol.ravel()}, iter={ite}, convergiu={conv}, residuo={res:.3e}")
