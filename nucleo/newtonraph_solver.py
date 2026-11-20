@@ -34,7 +34,14 @@ def MNR(f, j, x_ini, tol=1e-8, kmax=50):
     return x_aprox, k_ini, convergiu, np.linalg.norm(f(x_aprox), np.inf)
 
 if __name__ == "__main__":
-    x_teste = np.array([[1.0], [2.0]])
-    for kmax in (2, 50):
+    alpha, beta = np.random.ranf(), np.random.ranf()
+    x_teste = np.array([[np.pi*alpha], [np.pi*beta]])
+    convergiu = False
+    for kmax in range(0, 51):
         x_sol, ite, conv, res = MNR(f, jacobian, x_teste, kmax=kmax)
         print(f"kmax={kmax}: x={x_sol.ravel()}, iter={ite}, convergiu={conv}, residuo={res:.3e}")
+        convergiu = conv
+    if not convergiu:
+        print(f"O chute inicial {x_teste},\n"
+              "não gerou uma solução aproximada nos critérios de convergência\n"
+              "do resíduo nem na verificação do erro de aproximações consecutivas")
