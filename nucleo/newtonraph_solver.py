@@ -58,7 +58,21 @@ def MNR(f_func, j_func, x_ini, tol=1e-8, kmax=50):
 
 
 if __name__ == "__main__":
-    rng = np.random.default_rng(42)
-    x_teste = np.array([[np.pi * rng.random()], [np.pi * rng.random()]])
-    x_sol, ite, conv, res = MNR(f, jacobian, x_teste)
-    print(f"x={x_sol.ravel()}, iter={ite}, convergiu={conv}, residuo={res:.3e}")
+    theta_a = np.pi / 2
+    alpha, beta = np.random.rand(), np.random.rand()
+    x_teste = np.array([[np.pi * alpha], [np.pi * beta]])
+    convergiu = False
+
+    for kmax in range(1, 51):
+        x_sol, ite, conv, res = MNR(f, jacobian, x_teste, kmax=kmax)
+        if conv:
+            print(f"kmax={kmax}: x={x_sol.ravel()}, iter={ite}, convergiu={conv}, residuo={res:.3e}")
+            convergiu = True
+            break
+
+    if not convergiu:
+        print(
+            f"O chute inicial {x_teste.ravel()},\n"
+            "não gerou uma solução aproximada nos critérios de convergência\n"
+            "do resíduo nem na verificação do erro de aproximações consecutivas."
+        )
