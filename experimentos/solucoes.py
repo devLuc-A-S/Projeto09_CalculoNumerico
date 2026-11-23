@@ -32,9 +32,6 @@ def executar_etapa4(N=360, plotar=True):
     if plotar:
         print(f"Iterações na 1ª posição: {iteracoes[0]}")
         print(f"Média de iterações: {np.mean(iteracoes):.2f}")
-        print(f"Resíduo máximo: {np.max(residuos):.2e}")
-        print(f"theta_b min/max (rad): {np.min(thetas_b):.3f} / {np.max(thetas_b):.3f}")
-        print(f"theta_d min/max (rad): {np.min(thetas_d):.3f} / {np.max(thetas_d):.3f}")
         _plotar_etapa4(thetas_a, thetas_b, thetas_d, N)
 
     return thetas_a, thetas_b, thetas_d, iteracoes, residuos
@@ -59,7 +56,11 @@ def _plotar_etapa4(thetas_a, thetas_b, thetas_d, N):
     yB = nr.A * np.sin(thetas_a)
     xC = xB + nr.B * np.cos(thetas_b)
     yC = yB + nr.B * np.sin(thetas_b)
-
+    print(f"theta_B min / max (rad): {np.min(thetas_b):.3f} / {np.max(thetas_b):.3f}")
+    print(f"theta_D min / max (rad): {np.min(thetas_d):.3f} / {np.max(thetas_d):.3f}")
+    print(f"Altura do joelho yC min / max (m): {np.min(yC):.3f} / {np.max(yC):.3f}")
+    print(f"Diferenca de periodicidade (theta_B): {abs(thetas_b[0] - thetas_b[-1]):.2e}")
+    print(f"Diferenca de periodicidade (theta_D): {abs(thetas_d[0] - thetas_d[-1]):.2e}")
     plt.figure(figsize=(6, 6))
     plt.plot(xB, yB, '--', color='gray', label='Trajetória do pedal (B)')
     plt.plot(xC, yC, '--', color='orange', label='Trajetória do joelho (C)')
