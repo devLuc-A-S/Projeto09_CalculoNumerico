@@ -4,7 +4,7 @@ import nucleo.newtonraph_solver as nr
 from experimentos.aproximacoes_iniciais import investigar_aproximacoes
 
 
-def executar_etapa4(N=360, plotar=True):
+def executar_etapa4(N=361, plotar=True):
     _, chute = investigar_aproximacoes(plotar=False)
     if chute is None:
         chute = np.array([[0.5], [2.0]])
